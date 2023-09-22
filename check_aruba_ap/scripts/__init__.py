@@ -44,7 +44,20 @@ def get_parser(*args, **kwargs):
         help="Critical AP memory threshold (default: 95%%)",
         default=95,
     )
-
+    parser.add_argument(
+        "-rc",
+        "--warning-radio-usage-threshold",
+        type=int,
+        help="Warning AP radio interface usage threshold (default: 80%%)",
+        default=80,
+    )
+    parser.add_argument(
+        "-rw",
+        "--critical-radio-usage-threshold",
+        type=int,
+        help="Critical AP radio interface usage threshold (default: 95%%)",
+        default=95,
+    )
     return parser
 
 
