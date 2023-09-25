@@ -10,6 +10,22 @@ from check_aruba_ap.snmp_client import SNMPClient
 def main(argv=None):
     """Script main"""
     parser = get_parser(description=__doc__)
+
+    parser.add_argument(
+        "-rc",
+        "--warning-radio-usage-threshold",
+        type=int,
+        help="Warning AP radio interface usage threshold (default: 80%%)",
+        default=80,
+    )
+    parser.add_argument(
+        "-rw",
+        "--critical-radio-usage-threshold",
+        type=int,
+        help="Critical AP radio interface usage threshold (default: 95%%)",
+        default=95,
+    )
+
     args = parser.parse_args(argv if argv else sys.argv[1:])
 
     snmp_client = SNMPClient(
