@@ -26,6 +26,10 @@ def get_parser(*args, **kwargs):
         "-V", "--snmp-version", type=int, help="SNMP version (default: 1)", default=1
     )
     parser.add_argument(
+        "-t", "--snmp-timeout", type=int, help="SNMP timeout (default: 5)", default=5
+    )
+
+    parser.add_argument(
         "-cw",
         "--warning-cpu-threshold",
         type=int,

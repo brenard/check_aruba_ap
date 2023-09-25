@@ -9,6 +9,7 @@ class SNMPClient:
     hostname = "localhost"
     community = "public"
     version = 1
+    timeout = 5
     session = None
 
     ap_oids = {
@@ -37,15 +38,20 @@ class SNMPClient:
         "clients_count": "iso.3.6.1.4.1.14823.2.3.3.1.2.2.1.21",
     }
 
-    def __init__(self, hostname=None, community=None, version=None):
+    def __init__(self, hostname=None, community=None, version=None, timeout=None):
         if hostname is not None:
             self.hostname = hostname
         if community is not None:
             self.community = community
         if version is not None:
             self.version = version
+        if timeout is not None:
+            self.timeout = timeout
         self.session = Session(
-            hostname=self.hostname, community=self.community, version=self.version
+            hostname=self.hostname,
+            community=self.community,
+            version=self.version,
+            timeout=self.timeout,
         )
 
     @staticmethod

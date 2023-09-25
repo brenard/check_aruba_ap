@@ -26,6 +26,8 @@ options:
                         SNMP community (default: public)
   -V SNMP_VERSION, --snmp-version SNMP_VERSION
                         SNMP version (default: 1)
+  -t SNMP_TIMEOUT, --snmp-timeout SNMP_TIMEOUT
+                        SNMP timeout (default: 5)
   -cw WARNING_CPU_THRESHOLD, --warning-cpu-threshold WARNING_CPU_THRESHOLD
                         Warning AP CPU usage threshold (default: 80%)
   -cc CRITICAL_CPU_THRESHOLD, --critical-cpu-threshold CRITICAL_CPU_THRESHOLD
@@ -51,6 +53,8 @@ options:
                         SNMP community (default: public)
   -V SNMP_VERSION, --snmp-version SNMP_VERSION
                         SNMP version (default: 1)
+  -t SNMP_TIMEOUT, --snmp-timeout SNMP_TIMEOUT
+                        SNMP timeout (default: 5)
   -cw WARNING_CPU_THRESHOLD, --warning-cpu-threshold WARNING_CPU_THRESHOLD
                         Warning AP CPU usage threshold (default: 80%)
   -cc CRITICAL_CPU_THRESHOLD, --critical-cpu-threshold CRITICAL_CPU_THRESHOLD
@@ -87,6 +91,11 @@ object CheckCommand "check_aruba_aps" {
             description = "SNMP version"
             required = false
             value = "$snmp_version$"
+        }
+        "--snmp-timeout" = {
+            description = "SNMP timeout"
+            required = false
+            value = "$snmp_timeout$"
         }
         "--warning-cpu-threshold" = {
             description = "Warning CPU threshold"
@@ -128,6 +137,11 @@ object CheckCommand "check_aruba_ap" {
             description = "SNMP version"
             required = false
             value = "$snmp_version$"
+        }
+        "--snmp-timeout" = {
+            description = "SNMP timeout"
+            required = false
+            value = "$snmp_timeout$"
         }
         "--warning-cpu-threshold" = {
             description = "Warning CPU threshold"
