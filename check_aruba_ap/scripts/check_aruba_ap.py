@@ -2,8 +2,10 @@
 
 import sys
 
+from easysnmp.exceptions import EasySNMPTimeoutError
+
 from check_aruba_ap import format_ap_info, format_radio_info
-from check_aruba_ap.scripts import get_parser
+from check_aruba_ap.scripts import fatal_error, get_parser
 from check_aruba_ap.snmp_client import SNMPClient
 
 
@@ -31,8 +33,10 @@ def main(argv=None):
     snmp_client = SNMPClient(
         hostname=args.hostname, community=args.snmp_community, version=args.snmp_version
     )
-
-    ap = snmp_client.get_ap_status(ip_address=args.hostname)
+    try:
+        ap = snmp_client.get_ap_status(ip_address=args.hostname)
+    except EasySNMPTimeoutError:
+        fatal_error("Aruba AP not reachable via SNMP")
     status = 0
     errors = []
     messages = []
@@ -73,7 +77,10 @@ def main(argv=None):
         status = status if status > 1 else 1
         errors.append(f"Memory usage >= {args.warning_memory_threshold}%)")
 
-    radio = snmp_client.get_radio_status()
+    try:
+        radio = snmp_client.get_radio_status()
+    except EasySNMPTimeoutError:
+        fatal_error("Aruba AP not reachable via SNMP")
 
     for it in radio:
         if int(it["usage"]) >= args.critical_radio_usage_threshold:

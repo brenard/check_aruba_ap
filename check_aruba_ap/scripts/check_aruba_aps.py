@@ -2,8 +2,10 @@
 
 import sys
 
+from easysnmp.exceptions import EasySNMPTimeoutError
+
 from check_aruba_ap import format_ap_status
-from check_aruba_ap.scripts import get_parser
+from check_aruba_ap.scripts import fatal_error, get_parser
 from check_aruba_ap.snmp_client import SNMPClient
 
 
@@ -16,7 +18,11 @@ def main(argv=None):
         hostname=args.hostname, community=args.snmp_community, version=args.snmp_version
     )
 
-    aps = snmp_client.get_aps_status()
+    try:
+        aps = snmp_client.get_aps_status()
+    except EasySNMPTimeoutError:
+        fatal_error("Aruba virtual controller not reachable via SNMP")
+
     aps = sorted(aps, key=lambda ap: ap["name"])
     offline_aps = [ap for ap in aps if ap["status"] != "1"]
     critical_cpu_aps = [ap for ap in aps if int(ap["cpu_usage"]) >= args.critical_cpu_threshold]

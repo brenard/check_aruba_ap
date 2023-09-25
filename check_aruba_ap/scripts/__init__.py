@@ -1,6 +1,7 @@
 """ Common script stuff """
 
 import argparse
+import sys
 
 
 def get_parser(*args, **kwargs):
@@ -53,6 +54,12 @@ def get_parser(*args, **kwargs):
         default=95,
     )
     return parser
+
+
+def fatal_error(error):
+    """Handle fatal error"""
+    print(f"UNKNOWN - {error}")
+    sys.exit(3)
 
 
 # vim: tabstop=4 shiftwidth=4 softtabstop=4 expandtab
