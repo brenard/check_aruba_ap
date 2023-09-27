@@ -2,6 +2,8 @@
 
 Check Aruba APs plugin for Icinga (via SNMP).
 
+__Note:__ Test on Virtual Controler (Instant Mode) version 8.10.0.6 and AP-515 / AP-575 (firmware version 8.10.0.6).
+
 ## Installation
 
 ```bash
