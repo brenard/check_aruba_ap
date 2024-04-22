@@ -13,21 +13,45 @@ python3 -m pip install 'check_aruba_ap@git+https://github.com/brenard/check_arub
 ## Usage
 
 ### check_aruba_aps
-
 ```
-usage: check_aruba_aps [-h] -H HOSTNAME [-C SNMP_COMMUNITY] [-V SNMP_VERSION] [-cw WARNING_CPU_THRESHOLD] [-cc CRITICAL_CPU_THRESHOLD] [-mc WARNING_MEMORY_THRESHOLD]
-                       [-mw CRITICAL_MEMORY_THRESHOLD] [-rc WARNING_RADIO_USAGE_THRESHOLD] [-rw CRITICAL_RADIO_USAGE_THRESHOLD]
+usage: check_aruba_aps [-h] -H HOSTNAME [-C SNMP_COMMUNITY] [-V SNMP_VERSION]
+                       [-p SNMP_REMOTE_PORT] [--snmp-local-port SNMP_LOCAL_PORT]
+                       [--snmp-security-level {no_auth_or_privacy,auth_without_privacy,auth_with_privacy}]
+                       [-U SNMP_AUTH_USERNAME] [-P SNMP_AUTH_PASSWORD]
+                       [--snmp-auth-protocol {DEFAULT,MD5,SHA}]
+                       [--snmp-priv-protocol {DEFAULT,DES,AES}]
+                       [--snmp-priv-password SNMP_PRIV_PASSWORD] [-t SNMP_TIMEOUT]
+                       [-cw WARNING_CPU_THRESHOLD] [-cc CRITICAL_CPU_THRESHOLD]
+                       [-mc WARNING_MEMORY_THRESHOLD]
+                       [-mw CRITICAL_MEMORY_THRESHOLD]
 
 Icinga plugin to check all Aruba APs state via SNMP on the controller
 
 options:
   -h, --help            show this help message and exit
   -H HOSTNAME, --hostname HOSTNAME
-                        Aruba SNMP hostname (IP address required for the current elected virtual controller)
+                        Aruba SNMP hostname (IP address required for the current
+                        elected virtual controller)
   -C SNMP_COMMUNITY, --snmp-community SNMP_COMMUNITY
                         SNMP community (default: public)
   -V SNMP_VERSION, --snmp-version SNMP_VERSION
                         SNMP version (default: 1)
+  -p SNMP_REMOTE_PORT, --snmp-remote-port SNMP_REMOTE_PORT
+                        SNMP remote port (default: 161)
+  --snmp-local-port SNMP_LOCAL_PORT
+                        SNMP local port
+  --snmp-security-level {no_auth_or_privacy,auth_without_privacy,auth_with_privacy}
+                        SNMP v3 security level (default: 'no_auth_or_privacy')
+  -U SNMP_AUTH_USERNAME, --snmp-auth-username SNMP_AUTH_USERNAME
+                        SNMP v3 authentication username
+  -P SNMP_AUTH_PASSWORD, --snmp-auth-password SNMP_AUTH_PASSWORD
+                        SNMP v3 authentication password
+  --snmp-auth-protocol {DEFAULT,MD5,SHA}
+                        SNMP v3 authentication protocol (default: 'DEFAULT')
+  --snmp-priv-protocol {DEFAULT,DES,AES}
+                        SNMP v3 privacy protocol (default: 'DEFAULT')
+  --snmp-priv-password SNMP_PRIV_PASSWORD
+                        SNMP v3 privacy password
   -t SNMP_TIMEOUT, --snmp-timeout SNMP_TIMEOUT
                         SNMP timeout (default: 5)
   -cw WARNING_CPU_THRESHOLD, --warning-cpu-threshold WARNING_CPU_THRESHOLD
@@ -42,19 +66,45 @@ options:
 
 ### check_aruba_ap
 ```
-usage: check_aruba_ap [-h] -H HOSTNAME [-C SNMP_COMMUNITY] [-V SNMP_VERSION] [-cw WARNING_CPU_THRESHOLD] [-cc CRITICAL_CPU_THRESHOLD] [-mc WARNING_MEMORY_THRESHOLD]
-                      [-mw CRITICAL_MEMORY_THRESHOLD] [-rc WARNING_RADIO_USAGE_THRESHOLD] [-rw CRITICAL_RADIO_USAGE_THRESHOLD]
+usage: check_aruba_ap [-h] -H HOSTNAME [-C SNMP_COMMUNITY] [-V SNMP_VERSION]
+                      [-p SNMP_REMOTE_PORT] [--snmp-local-port SNMP_LOCAL_PORT]
+                      [--snmp-security-level {no_auth_or_privacy,auth_without_privacy,auth_with_privacy}]
+                      [-U SNMP_AUTH_USERNAME] [-P SNMP_AUTH_PASSWORD]
+                      [--snmp-auth-protocol {DEFAULT,MD5,SHA}]
+                      [--snmp-priv-protocol {DEFAULT,DES,AES}]
+                      [--snmp-priv-password SNMP_PRIV_PASSWORD] [-t SNMP_TIMEOUT]
+                      [-cw WARNING_CPU_THRESHOLD] [-cc CRITICAL_CPU_THRESHOLD]
+                      [-mc WARNING_MEMORY_THRESHOLD] [-mw CRITICAL_MEMORY_THRESHOLD]
+                      [-rc WARNING_RADIO_USAGE_THRESHOLD]
+                      [-rw CRITICAL_RADIO_USAGE_THRESHOLD]
 
 Icinga plugin to check one Aruba AP state via SNMP
 
 options:
   -h, --help            show this help message and exit
   -H HOSTNAME, --hostname HOSTNAME
-                        Aruba SNMP hostname (IP address required for the current elected virtual controller)
+                        Aruba SNMP hostname (IP address required for the current
+                        elected virtual controller)
   -C SNMP_COMMUNITY, --snmp-community SNMP_COMMUNITY
                         SNMP community (default: public)
   -V SNMP_VERSION, --snmp-version SNMP_VERSION
                         SNMP version (default: 1)
+  -p SNMP_REMOTE_PORT, --snmp-remote-port SNMP_REMOTE_PORT
+                        SNMP remote port (default: 161)
+  --snmp-local-port SNMP_LOCAL_PORT
+                        SNMP local port
+  --snmp-security-level {no_auth_or_privacy,auth_without_privacy,auth_with_privacy}
+                        SNMP v3 security level (default: 'no_auth_or_privacy')
+  -U SNMP_AUTH_USERNAME, --snmp-auth-username SNMP_AUTH_USERNAME
+                        SNMP v3 authentication username
+  -P SNMP_AUTH_PASSWORD, --snmp-auth-password SNMP_AUTH_PASSWORD
+                        SNMP v3 authentication password
+  --snmp-auth-protocol {DEFAULT,MD5,SHA}
+                        SNMP v3 authentication protocol (default: 'DEFAULT')
+  --snmp-priv-protocol {DEFAULT,DES,AES}
+                        SNMP v3 privacy protocol (default: 'DEFAULT')
+  --snmp-priv-password SNMP_PRIV_PASSWORD
+                        SNMP v3 privacy password
   -t SNMP_TIMEOUT, --snmp-timeout SNMP_TIMEOUT
                         SNMP timeout (default: 5)
   -cw WARNING_CPU_THRESHOLD, --warning-cpu-threshold WARNING_CPU_THRESHOLD

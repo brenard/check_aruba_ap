@@ -5,8 +5,7 @@ import sys
 from easysnmp.exceptions import EasySNMPTimeoutError
 
 from check_aruba_ap import format_ap_info, format_radio_info
-from check_aruba_ap.scripts import fatal_error, get_parser
-from check_aruba_ap.snmp_client import SNMPClient
+from check_aruba_ap.scripts import fatal_error, get_parser, get_snmp_client
 
 
 def main(argv=None):
@@ -29,10 +28,8 @@ def main(argv=None):
     )
 
     args = parser.parse_args(argv if argv else sys.argv[1:])
+    snmp_client = get_snmp_client(args)
 
-    snmp_client = SNMPClient(
-        hostname=args.hostname, community=args.snmp_community, version=args.snmp_version
-    )
     try:
         ap = snmp_client.get_ap_status(ip_address=args.hostname)
     except EasySNMPTimeoutError:

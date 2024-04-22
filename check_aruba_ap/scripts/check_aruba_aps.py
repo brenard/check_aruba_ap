@@ -5,18 +5,14 @@ import sys
 from easysnmp.exceptions import EasySNMPTimeoutError
 
 from check_aruba_ap import format_ap_status
-from check_aruba_ap.scripts import fatal_error, get_parser
-from check_aruba_ap.snmp_client import SNMPClient
+from check_aruba_ap.scripts import fatal_error, get_parser, get_snmp_client
 
 
 def main(argv=None):
     """Script main"""
     parser = get_parser(description=__doc__)
     args = parser.parse_args(argv if argv else sys.argv[1:])
-
-    snmp_client = SNMPClient(
-        hostname=args.hostname, community=args.snmp_community, version=args.snmp_version
-    )
+    snmp_client = get_snmp_client(args)
 
     try:
         aps = snmp_client.get_aps_status()

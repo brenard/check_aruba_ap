@@ -6,12 +6,6 @@ from easysnmp import Session
 class SNMPClient:
     """SNMP client (based on easysnmp session usage)"""
 
-    hostname = "localhost"
-    community = "public"
-    version = 1
-    timeout = 5
-    session = None
-
     ap_oids = {
         "ip": "iso.3.6.1.4.1.14823.2.3.3.1.2.1.1.3",
         "name": "iso.3.6.1.4.1.14823.2.3.3.1.2.1.1.2",
@@ -38,20 +32,13 @@ class SNMPClient:
         "clients_count": "iso.3.6.1.4.1.14823.2.3.3.1.2.2.1.21",
     }
 
-    def __init__(self, hostname=None, community=None, version=None, timeout=None):
-        if hostname is not None:
-            self.hostname = hostname
-        if community is not None:
-            self.community = community
-        if version is not None:
-            self.version = version
-        if timeout is not None:
-            self.timeout = timeout
+    def __init__(self, **kwargs):
         self.session = Session(
-            hostname=self.hostname,
-            community=self.community,
-            version=self.version,
-            timeout=self.timeout,
+            hostname=kwargs.pop("hostname", "localhost"),
+            community=kwargs.pop("community", "public"),
+            version=kwargs.pop("version", 1),
+            timeout=kwargs.pop("timeout", 5),
+            **kwargs,
         )
 
     @staticmethod
