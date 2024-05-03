@@ -1,17 +1,15 @@
 """ Icinga plugin to check all Aruba APs state via SNMP on the controller """
 
-import sys
-
 from easysnmp.exceptions import EasySNMPTimeoutError
 
 from check_aruba_ap import format_ap_status
-from check_aruba_ap.scripts import fatal_error, get_parser, get_snmp_client
+from check_aruba_ap.scripts import fatal_error, get_parser, get_snmp_client, parse_args
 
 
 def main(argv=None):
     """Script main"""
     parser = get_parser(description=__doc__)
-    args = parser.parse_args(argv if argv else sys.argv[1:])
+    args = parse_args(parser, argv)
     snmp_client = get_snmp_client(args)
 
     try:
@@ -21,19 +19,29 @@ def main(argv=None):
 
     aps = sorted(aps, key=lambda ap: ap["name"])
     offline_aps = [ap for ap in aps if ap["status"] != "1"]
-    critical_cpu_aps = [ap for ap in aps if int(ap["cpu_usage"]) >= args.critical_cpu_threshold]
+    critical_cpu_aps = [
+        ap
+        for ap in aps
+        if "cpu_usage" in ap and int(ap["cpu_usage"]) >= args.critical_cpu_threshold
+    ]
     warning_cpu_aps = [
         ap
         for ap in aps
-        if int(ap["cpu_usage"]) >= args.warning_cpu_threshold and ap not in critical_cpu_aps
+        if "cpu_usage" in ap
+        and int(ap["cpu_usage"]) >= args.warning_cpu_threshold
+        and ap not in critical_cpu_aps
     ]
     critical_memory_aps = [
-        ap for ap in aps if int(ap["mem_usage"]) >= args.critical_memory_threshold
+        ap
+        for ap in aps
+        if "mem_usage" in ap and int(ap["mem_usage"]) >= args.critical_memory_threshold
     ]
     warning_memory_aps = [
         ap
         for ap in aps
-        if int(ap["mem_usage"]) >= args.warning_memory_threshold and ap not in critical_memory_aps
+        if "mem_usage" in ap
+        and int(ap["mem_usage"]) >= args.warning_memory_threshold
+        and ap not in critical_memory_aps
     ]
     status = 0
     errors = []
@@ -95,6 +103,8 @@ def main(argv=None):
     status_labels = {0: "OK", 1: "WARNING", 2: "CRITICAL", 3: "UNKNOWN"}
     print(f"{status_labels[status]} - {', '.join(errors + messages)}")
     print("\n".join(extra_lines))
+
+    return status
 
 
 # vim: tabstop=4 shiftwidth=4 softtabstop=4 expandtab
