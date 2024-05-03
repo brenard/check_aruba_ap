@@ -35,16 +35,18 @@ sudo \
 
 ### check_aruba_aps
 ```
-usage: check_aruba_aps [-h] -H HOSTNAME [-C SNMP_COMMUNITY] [-V SNMP_VERSION]
-                       [-p SNMP_REMOTE_PORT] [--snmp-local-port SNMP_LOCAL_PORT]
+usage: check_aruba_aps [-h] -H HOSTNAME [-cw WARNING_CPU_THRESHOLD]
+                       [-cc CRITICAL_CPU_THRESHOLD] [-mc WARNING_MEMORY_THRESHOLD]
+                       [-mw CRITICAL_MEMORY_THRESHOLD]
+                       [--snmp-profile {instant_node,a7010}] [-C SNMP_COMMUNITY]
+                       [-V SNMP_VERSION] [-p SNMP_REMOTE_PORT]
+                       [--snmp-local-port SNMP_LOCAL_PORT]
                        [--snmp-security-level {no_auth_or_privacy,auth_without_privacy,auth_with_privacy}]
                        [-U SNMP_AUTH_USERNAME] [-P SNMP_AUTH_PASSWORD]
                        [--snmp-auth-protocol {DEFAULT,MD5,SHA}]
                        [--snmp-priv-protocol {DEFAULT,DES,AES}]
                        [--snmp-priv-password SNMP_PRIV_PASSWORD] [-t SNMP_TIMEOUT]
-                       [-cw WARNING_CPU_THRESHOLD] [-cc CRITICAL_CPU_THRESHOLD]
-                       [-mc WARNING_MEMORY_THRESHOLD]
-                       [-mw CRITICAL_MEMORY_THRESHOLD]
+                       [-v] [-d] [-l LOG_FILE] [-c]
 
 Icinga plugin to check all Aruba APs state via SNMP on the controller
 
@@ -53,6 +55,18 @@ options:
   -H HOSTNAME, --hostname HOSTNAME
                         Aruba SNMP hostname (IP address required for the current
                         elected virtual controller)
+  -cw WARNING_CPU_THRESHOLD, --warning-cpu-threshold WARNING_CPU_THRESHOLD
+                        Warning AP CPU usage threshold (default: 80%)
+  -cc CRITICAL_CPU_THRESHOLD, --critical-cpu-threshold CRITICAL_CPU_THRESHOLD
+                        Critical AP CPU usage threshold (default: 95%)
+  -mc WARNING_MEMORY_THRESHOLD, --warning-memory-threshold WARNING_MEMORY_THRESHOLD
+                        Warning AP memory threshold (default: 80%)
+  -mw CRITICAL_MEMORY_THRESHOLD, --critical-memory-threshold CRITICAL_MEMORY_THRESHOLD
+                        Critical AP memory threshold (default: 95%)
+
+SNMP options:
+  --snmp-profile {instant_node,a7010}
+                        SNMP profile (default: instant_node)
   -C SNMP_COMMUNITY, --snmp-community SNMP_COMMUNITY
                         SNMP community (default: public)
   -V SNMP_VERSION, --snmp-version SNMP_VERSION
@@ -75,27 +89,29 @@ options:
                         SNMP v3 privacy password
   -t SNMP_TIMEOUT, --snmp-timeout SNMP_TIMEOUT
                         SNMP timeout (default: 5)
-  -cw WARNING_CPU_THRESHOLD, --warning-cpu-threshold WARNING_CPU_THRESHOLD
-                        Warning AP CPU usage threshold (default: 80%)
-  -cc CRITICAL_CPU_THRESHOLD, --critical-cpu-threshold CRITICAL_CPU_THRESHOLD
-                        Critical AP CPU usage threshold (default: 95%)
-  -mc WARNING_MEMORY_THRESHOLD, --warning-memory-threshold WARNING_MEMORY_THRESHOLD
-                        Warning AP memory threshold (default: 80%)
-  -mw CRITICAL_MEMORY_THRESHOLD, --critical-memory-threshold CRITICAL_MEMORY_THRESHOLD
-                        Critical AP memory threshold (default: 95%)
+
+Logging options:
+  -v, --verbose         Enable verbose mode
+  -d, --debug           Enable debug mode
+  -l LOG_FILE, --log-file LOG_FILE
+                        Log file path
+  -c, --console         Always log on console (even if log file is configured)
 ```
 
 ### check_aruba_ap
 ```
-usage: check_aruba_ap [-h] -H HOSTNAME [-C SNMP_COMMUNITY] [-V SNMP_VERSION]
-                      [-p SNMP_REMOTE_PORT] [--snmp-local-port SNMP_LOCAL_PORT]
+usage: check_aruba_ap [-h] -H HOSTNAME [-cw WARNING_CPU_THRESHOLD]
+                      [-cc CRITICAL_CPU_THRESHOLD] [-mc WARNING_MEMORY_THRESHOLD]
+                      [-mw CRITICAL_MEMORY_THRESHOLD]
+                      [--snmp-profile {instant_node,a7010}] [-C SNMP_COMMUNITY]
+                      [-V SNMP_VERSION] [-p SNMP_REMOTE_PORT]
+                      [--snmp-local-port SNMP_LOCAL_PORT]
                       [--snmp-security-level {no_auth_or_privacy,auth_without_privacy,auth_with_privacy}]
                       [-U SNMP_AUTH_USERNAME] [-P SNMP_AUTH_PASSWORD]
                       [--snmp-auth-protocol {DEFAULT,MD5,SHA}]
                       [--snmp-priv-protocol {DEFAULT,DES,AES}]
                       [--snmp-priv-password SNMP_PRIV_PASSWORD] [-t SNMP_TIMEOUT]
-                      [-cw WARNING_CPU_THRESHOLD] [-cc CRITICAL_CPU_THRESHOLD]
-                      [-mc WARNING_MEMORY_THRESHOLD] [-mw CRITICAL_MEMORY_THRESHOLD]
+                      [-v] [-d] [-l LOG_FILE] [-c] [-A AP_ADDRESS]
                       [-rc WARNING_RADIO_USAGE_THRESHOLD]
                       [-rw CRITICAL_RADIO_USAGE_THRESHOLD]
 
@@ -106,6 +122,25 @@ options:
   -H HOSTNAME, --hostname HOSTNAME
                         Aruba SNMP hostname (IP address required for the current
                         elected virtual controller)
+  -cw WARNING_CPU_THRESHOLD, --warning-cpu-threshold WARNING_CPU_THRESHOLD
+                        Warning AP CPU usage threshold (default: 80%)
+  -cc CRITICAL_CPU_THRESHOLD, --critical-cpu-threshold CRITICAL_CPU_THRESHOLD
+                        Critical AP CPU usage threshold (default: 95%)
+  -mc WARNING_MEMORY_THRESHOLD, --warning-memory-threshold WARNING_MEMORY_THRESHOLD
+                        Warning AP memory threshold (default: 80%)
+  -mw CRITICAL_MEMORY_THRESHOLD, --critical-memory-threshold CRITICAL_MEMORY_THRESHOLD
+                        Critical AP memory threshold (default: 95%)
+  -A AP_ADDRESS, --ap-address AP_ADDRESS
+                        If the SNMP host is a controler, the AP IP address have to
+                        be provided using this parameter
+  -rc WARNING_RADIO_USAGE_THRESHOLD, --warning-radio-usage-threshold WARNING_RADIO_USAGE_THRESHOLD
+                        Warning AP radio interface usage threshold (default: 80%)
+  -rw CRITICAL_RADIO_USAGE_THRESHOLD, --critical-radio-usage-threshold CRITICAL_RADIO_USAGE_THRESHOLD
+                        Critical AP radio interface usage threshold (default: 95%)
+
+SNMP options:
+  --snmp-profile {instant_node,a7010}
+                        SNMP profile (default: instant_node)
   -C SNMP_COMMUNITY, --snmp-community SNMP_COMMUNITY
                         SNMP community (default: public)
   -V SNMP_VERSION, --snmp-version SNMP_VERSION
@@ -128,18 +163,13 @@ options:
                         SNMP v3 privacy password
   -t SNMP_TIMEOUT, --snmp-timeout SNMP_TIMEOUT
                         SNMP timeout (default: 5)
-  -cw WARNING_CPU_THRESHOLD, --warning-cpu-threshold WARNING_CPU_THRESHOLD
-                        Warning AP CPU usage threshold (default: 80%)
-  -cc CRITICAL_CPU_THRESHOLD, --critical-cpu-threshold CRITICAL_CPU_THRESHOLD
-                        Critical AP CPU usage threshold (default: 95%)
-  -mc WARNING_MEMORY_THRESHOLD, --warning-memory-threshold WARNING_MEMORY_THRESHOLD
-                        Warning AP memory threshold (default: 80%)
-  -mw CRITICAL_MEMORY_THRESHOLD, --critical-memory-threshold CRITICAL_MEMORY_THRESHOLD
-                        Critical AP memory threshold (default: 95%)
-  -rc WARNING_RADIO_USAGE_THRESHOLD, --warning-radio-usage-threshold WARNING_RADIO_USAGE_THRESHOLD
-                        Warning AP radio interface usage threshold (default: 80%)
-  -rw CRITICAL_RADIO_USAGE_THRESHOLD, --critical-radio-usage-threshold CRITICAL_RADIO_USAGE_THRESHOLD
-                        Critical AP radio interface usage threshold (default: 95%)
+
+Logging options:
+  -v, --verbose         Enable verbose mode
+  -d, --debug           Enable debug mode
+  -l LOG_FILE, --log-file LOG_FILE
+                        Log file path
+  -c, --console         Always log on console (even if log file is configured)
 ```
 
 ## Icinga2 configuration
