@@ -9,11 +9,15 @@ __Note:__ Test on :
 ## Installation
 
 ### Using pip
+
 ```bash
 python3 -m pip install 'check_aruba_ap@git+https://github.com/brenard/check_aruba_ap'
 ```
 
+__Note:__ Since Debian 12 Bookworm, you have to add the `--break-system-packages` parameter.
+
 ### Using pip with a virtualenv
+
 ```bash
 sudo apt install python3-venv
 python3 -m venv /usr/local/share/check_aruba_ap
@@ -27,7 +31,41 @@ ln -s /usr/local/share/check_aruba_ap/bin/check_aruba_ap* /usr/local/lib/nagios/
 
 ```bash
 sudo \
-  PIPX_HOME=/usr/local/share/check_aruba_ap \
+  PIPX_HOME=/usr/local/share/pipx-nagios-plugins \
+  PIPX_BIN_DIR=/usr/local/lib/nagios/plugins \
+  python3 -m pipx install \
+  'check_aruba_ap@git+https://github.com/brenard/check_aruba_ap'
+```
+
+__Note:__ the `pipx` package is available since Debian 11 Bulleyes (via backports) and Debian 12 Bookworm.
+
+## Upgrade
+
+### Using pip
+
+```bash
+python3 -m pip uninstall check_aruba_ap
+python3 -m pip install -U 'check_aruba_ap@git+https://github.com/brenard/check_aruba_ap'
+```
+
+### Using pip with a virtualenv
+
+```bash
+/usr/local/share/check_aruba_ap/bin/python3 -m pip uninstall \
+  'check_aruba_ap'
+/usr/local/share/check_aruba_ap/bin/python3 -m pip install \
+  'check_aruba_ap@git+https://github.com/brenard/check_aruba_ap'
+```
+
+### Using pipx
+
+```bash
+sudo \
+  PIPX_HOME=/usr/local/share/pipx-nagios-plugins \
+  PIPX_BIN_DIR=/usr/local/lib/nagios/plugins \
+  python3 -m pipx uninstall check_aruba_ap
+sudo \
+  PIPX_HOME=/usr/local/share/pipx-nagios-plugins \
   PIPX_BIN_DIR=/usr/local/lib/nagios/plugins \
   python3 -m pipx install \
   'check_aruba_ap@git+https://github.com/brenard/check_aruba_ap'
