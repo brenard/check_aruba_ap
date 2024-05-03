@@ -2,7 +2,9 @@
 
 Check Aruba APs plugin for Icinga (via SNMP).
 
-__Note:__ Test on Virtual Controler (Instant Mode) version 8.10.0.6 and AP-515 / AP-575 (firmware version 8.10.0.6).
+__Note:__ Test on :
+ * Virtual Controler (Instant Mode) version 8.10.0.6 and AP-515 / AP-575 (firmware version 8.10.0.6) (use `--snmp-profile instant_node`, default)
+ * A7010 Controler version 8.10.0.6 LSR and APs 535, 515, 375 & 345 (use `--snmp-profile a7010`)
 
 ## Installation
 
