@@ -47,6 +47,10 @@ def main(argv=None):
 
     perf_data = {}
 
+    if ap["status"] != "1":
+        status = 2
+        errors.append(f"AP {ap['name']} is offline")
+
     if "cpu_usage" in ap:
         perf_data["cpu"] = ";".join(
             [
