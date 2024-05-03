@@ -144,5 +144,7 @@ def main(argv=None):
     )
     print("\n".join(extra_lines))
 
+    return status
+
 
 # vim: tabstop=4 shiftwidth=4 softtabstop=4 expandtab
